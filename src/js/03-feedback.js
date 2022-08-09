@@ -3,23 +3,26 @@ import  throttle  from 'lodash.throttle';
 const form = document.querySelector(".feedback-form")
 
 
-
-window.addEventListener("load", onLoaded)
-
-const obj = {}
-
+let obj = {}
+onLoaded()
 function onLoaded(event){
-    if(localStorage.getItem("feedback-form-state")){
-        const newObj = JSON.parse(localStorage.getItem("feedback-form-state"))
-        form[0].value = newObj.email
-        form[1].value = newObj.message
-    }    
+    if(!localStorage.getItem("feedback-form-state")){
+       return
+    }   
+    obj = JSON.parse(localStorage.getItem("feedback-form-state"))
+    if(obj.email){
+        form[0].value = obj.email
+    }
+    if(obj.message){
+        form[1].value = obj.message
+    }
 }
 
 form.addEventListener("input", throttle(valueForm, 500))
 
 function valueForm (event) {
     event.preventDefault()
+   
     obj[event.target.name] = event.target.value
     localStorage.setItem("feedback-form-state", JSON.stringify(obj))
 }

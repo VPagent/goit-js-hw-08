@@ -507,14 +507,13 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _lodashThrottle = require("lodash.throttle");
 var _lodashThrottleDefault = parcelHelpers.interopDefault(_lodashThrottle);
 const form = document.querySelector(".feedback-form");
-window.addEventListener("load", onLoaded);
-const obj = {};
+let obj = {};
+onLoaded();
 function onLoaded(event) {
-    if (localStorage.getItem("feedback-form-state")) {
-        const newObj = JSON.parse(localStorage.getItem("feedback-form-state"));
-        form[0].value = newObj.email;
-        form[1].value = newObj.message;
-    }
+    if (!localStorage.getItem("feedback-form-state")) return;
+    obj = JSON.parse(localStorage.getItem("feedback-form-state"));
+    if (obj.email) form[0].value = obj.email;
+    if (obj.message) form[1].value = obj.message;
 }
 form.addEventListener("input", (0, _lodashThrottleDefault.default)(valueForm, 500));
 function valueForm(event) {
