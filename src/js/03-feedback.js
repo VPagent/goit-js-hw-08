@@ -33,6 +33,8 @@ function onSubmForm(event){
     event.preventDefault()
     console.log(obj)
     form.reset()
+    localStorage.removeItem("feedback-form-state")
+    obj = {}
 }
 
 
